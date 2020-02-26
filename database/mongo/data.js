@@ -5,11 +5,11 @@ const { Schema } = mongoose;
 // this will be our data base's data structure
 const DataSchema = new Schema(
   {
-    _id: Number,
-    productName: String,
-    image: String,
+    voteName: String,
+    voteOptions: [String],
+    vote: [Number],
   },
-  { collection: 'productData' },
+  { collection: 'pizzaToppings' },
 );
 
 // export the new Schema so we could modify it using Node.js

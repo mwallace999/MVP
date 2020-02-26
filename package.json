@@ -37,8 +37,5 @@
     "type": "git",
     "url": "git+https://github.com/mwallace999/MVP.git"
   },
-  "bugs": {
-    "url": "https://github.com/mwallace999/MVP/issues"
-  },
   "homepage": "https://github.com/mwallace999/MVP#readme"
 }

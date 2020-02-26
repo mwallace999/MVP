@@ -8,12 +8,9 @@ export default class App extends Component {
     this.state = {
       data: [10, 5, 2, 20, 30, 45, 50, 30],
       labels: ['Choice1', 'Choice2', 'Choice3', 'Choice4', 'Choice5', 'Choice6', 'Choice7', 'Choice8'],
-      startDate: '2019-01-01', //YYYY-MM-DD
-      endDate: '2019-03-01', //YYYY-MM-DD
-      timeSpan: 'Day',
-      //coin: 'something',
+      vote: 'pizzaToppings',
     };
-    this.getCoin = this.getCoin.bind(this);
+    this.getVote = this.getVote.bind(this);
   }
 
   // const data = {
@@ -26,19 +23,19 @@ export default class App extends Component {
   //   }]
   // }
 
-  // componentDidMount() {
-  //   this.getCoin();
-  // }
+  componentDidMount() {
+    this.getVote();
+  }
 
-  getCoin() {
-    axios.get('/getCoin', {
+  getVote() {
+    axios.get('/getVote', {
       params: {
-        startDate: this.state.startDate,
-        endDate: this.state.endDate,
+        vote: this.state.vote,
       },
     })
       .then((response) => {
-        this.setState({ data: Object.values(response.data) }, () => { console.log(response.data); });
+        console.log(response.data.data);
+        //this.setState({ data: Object.values(response.data) }, () => { console.log(response.data); });
       })
       .catch((error) => { console.log(error); });
   }

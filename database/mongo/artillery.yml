@@ -3,7 +3,7 @@
 # artillery quick --count 10 -n 20 http://localhost:3000/
 
 config:
-  target:  'http://localhost:3000' 
+  target:  'http://localhost:9001' 
   phases:
     - duration: 10
       arrivalRate: 500
@@ -13,5 +13,5 @@ config:
 scenarios:
   - flow:
     - get:
-        url: "/getImages"
+        url: "/getVote"
 
