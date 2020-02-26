@@ -6,8 +6,8 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      data: [0, 10, 5, 2, 20, 30, 45, 50, 30, 5],
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      data: [10, 5, 2, 20, 30, 45, 50, 30],
+      labels: ['Choice1', 'Choice2', 'Choice3', 'Choice4', 'Choice5', 'Choice6', 'Choice7', 'Choice8'],
       startDate: '2019-01-01', //YYYY-MM-DD
       endDate: '2019-03-01', //YYYY-MM-DD
       timeSpan: 'Day',
@@ -26,9 +26,9 @@ export default class App extends Component {
   //   }]
   // }
 
-  componentDidMount() {
-    this.getCoin();
-  }
+  // componentDidMount() {
+  //   this.getCoin();
+  // }
 
   getCoin() {
     axios.get('/getCoin', {
@@ -46,31 +46,36 @@ export default class App extends Component {
   render() {
     return (
       <>
-      <h1>Title</h1>
-      <div className="grid-container">
-        <div className="grid-userInput">
-          <h3>User Input</h3>
+        <h1>Title</h1>
+        <div className="grid-container">
+          <div className="grid-userInput">
+            <h3>User Input</h3>
+          </div>
+          <div className="grid-mainChart">
+            <h3>Main Chart</h3>
+            <Chart
+              data={this.state.data}
+              labels={this.state.labels}
+              timeSpan={this.state.timeSpan}
+            />
+          </div>
+          <div className="grid-chartSelect1">
+            <h3>Method1</h3>
+            <Chart
+              data={this.state.data}
+              labels={this.state.labels}
+              timeSpan={this.state.timeSpan}
+            />
+          </div>
+          <div className="grid-chartSelect2">
+            <h3>Method2</h3>
+            <Chart
+              data={this.state.data}
+              labels={this.state.labels}
+              timeSpan={this.state.timeSpan}
+            />
+          </div>
         </div>
-        <div className="grid-mainChart">
-          <h3>Main Chart</h3>
-        </div>
-        <div className="grid-chartSelect1">
-          <h3>Method1</h3>
-          <Chart
-            data={this.state.data}
-            labels={this.state.labels}
-            timeSpan={this.state.timeSpan}
-          />
-        </div>
-        <div className="grid-chartSelect2">
-          <h3>Method2</h3>
-          <Chart
-            data={this.state.data}
-            labels={this.state.labels}
-            timeSpan={this.state.timeSpan}
-          />
-        </div>  
-      </div>
       </>
     );
   }

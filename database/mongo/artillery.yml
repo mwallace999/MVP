@@ -1,0 +1,17 @@
+#  Run by typing command: artillery run database/mongo/artillery.yml from project folder
+
+# artillery quick --count 10 -n 20 http://localhost:3000/
+
+config:
+  target:  'http://localhost:3000' 
+  phases:
+    - duration: 10
+      arrivalRate: 500
+  # defaults:
+  #   headers:
+  #     x-my-service-auth: '987401838271002188298567'
+scenarios:
+  - flow:
+    - get:
+        url: "/getImages"
+
