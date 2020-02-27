@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Chart from './Chart.js';
+import ChartFPtP from './ChartFPtP.js';
+import ChartRC from './ChartRC.js';
 
 export default class App extends Component {
   constructor() {
@@ -24,6 +25,18 @@ export default class App extends Component {
     }
     return votes;
   }
+
+  fptpDataAlg(data) {
+    const fptpObj = {};
+    for (let i = 1; i <= this.state.labels.length; i++) {
+      fptpObj[i] = 0;
+    }
+    for (let j = 0; j < data.length; j++) {
+      fptpObj[data[j][0]] += 1; //<--------
+    }
+    return Object.values(fptpObj);
+  };
+
 
   getVote() {
     axios.get('/getVote', {
@@ -51,23 +64,23 @@ export default class App extends Component {
           </div>
           <div className="grid-mainChart">
             <h3>Main Chart</h3>
-            <Chart
-              label="Whatever"
-              data={this.state.data}
+            <ChartFPtP
+              label="First Past the Post"
+              data={this.fptpDataAlg(this.state.data)}
               labels={this.state.labels}
             />
           </div>
           <div className="grid-chartSelect1">
             <h3>First Past the Post</h3>
-            <Chart
+            <ChartFPtP
               label="First Past the Post"
-              data={this.state.data}
+              data={this.fptpDataAlg(this.state.data)}
               labels={this.state.labels}
             />
           </div>
           <div className="grid-chartSelect2">
             <h3>Single Transferable</h3>
-            <Chart
+            <ChartRC
               label="Single Transferable"
               data={this.state.data}
               labels={this.state.labels}
