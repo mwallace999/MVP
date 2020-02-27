@@ -72,4 +72,6 @@ const mongoSeeder = (collection, overwrite) => {
   });
 };
 
-mongoSeeder(collectionName, false);
+//mongoSeeder(collectionName, false);
+
+exports.mongoSeeder = mongoSeeder;

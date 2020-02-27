@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-//const axios = require('axios');
+const seeder = require('./../database/mongo/mongoSeeder');
+
 
 const port = 9001;
 const app = express();
@@ -22,6 +23,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.get('/getVote', (req, res) => {
   console.log('Server getting from Mongo db');
+  seeder.mongoSeeder('votes', false);
   Data.find({ voteName: req.query.voteName }, (err, data) => {
     console.log(data);
     if (err) return res.json({ success: false, error: err });

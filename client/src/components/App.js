@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Chart from './Chart.js';
 
-
 export default class App extends Component {
   constructor() {
     super();
@@ -24,6 +23,10 @@ export default class App extends Component {
       votes.push(i.vote);
     }
     return votes;
+  }
+
+  test() {
+    console.log('Yah, you clicked a button!');
   }
 
   fptpAlg(data) {
@@ -54,6 +57,10 @@ export default class App extends Component {
       .catch((error) => { console.log(error); });
   }
 
+  seedVote() {
+    
+  }
+
   render() {
     return (
       <>
@@ -61,6 +68,7 @@ export default class App extends Component {
         <div className="grid-container">
           <div className="grid-userInput">
             <h3>User Input</h3>
+            <button type="button" onClick={this.test}>Db Seeder</button>
           </div>
           <div className="grid-mainChart">
             <h3>Main Chart</h3>

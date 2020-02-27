@@ -25,11 +25,13 @@ export default function Chart({ /*label,*/ labels, data, backgroundColor, border
     legend: {
       display: false,
     },
+    responsive: true,
+    maintainAspectRatio: false,
   };
 
   return (
     <div>
-      <Bar data={chartData} options={options} />
+      <Bar data={chartData} options={options} /*width="50%" height="100%"*/ />
     </div>
   );
 }
