@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ChartFPtP from './ChartFPtP.js';
-import ChartRC from './ChartRC.js';
+import Chart from './Chart.js';
+
 
 export default class App extends Component {
   constructor() {
@@ -26,13 +26,13 @@ export default class App extends Component {
     return votes;
   }
 
-  fptpDataAlg(data) {
+  fptpAlg(data) {
     const fptpObj = {};
     for (let i = 1; i <= this.state.labels.length; i++) {
       fptpObj[i] = 0;
     }
     for (let j = 0; j < data.length; j++) {
-      fptpObj[data[j][0]] += 1; //<--------
+      fptpObj[data[j][0]] += 1;
     }
     return Object.values(fptpObj);
   };
@@ -64,26 +64,32 @@ export default class App extends Component {
           </div>
           <div className="grid-mainChart">
             <h3>Main Chart</h3>
-            <ChartFPtP
-              label="First Past the Post"
-              data={this.fptpDataAlg(this.state.data)}
+            <Chart
+              // label="First Past the Post"
+              data={this.fptpAlg(this.state.data)}
               labels={this.state.labels}
+              backgroundColor="rgb(46, 134, 193)"
+              borderColor="rgb(21, 67, 96)"
             />
           </div>
           <div className="grid-chartSelect1">
             <h3>First Past the Post</h3>
-            <ChartFPtP
-              label="First Past the Post"
-              data={this.fptpDataAlg(this.state.data)}
+            <Chart
+              // label="First Past the Post"
+              data={this.fptpAlg(this.state.data)}
               labels={this.state.labels}
+              backgroundColor="rgb(46, 134, 193)"
+              borderColor="rgb(21, 67, 96)"
             />
           </div>
           <div className="grid-chartSelect2">
-            <h3>Single Transferable</h3>
-            <ChartRC
-              label="Single Transferable"
-              data={this.state.data}
+            <h3>Ranked Choice</h3>
+            <Chart
+              // label="First Past the Post"
+              data={this.fptpAlg(this.state.data)}
               labels={this.state.labels}
+              backgroundColor="rgb(46, 134, 193)"
+              borderColor="rgb(21, 67, 96)"
             />
           </div>
         </div>

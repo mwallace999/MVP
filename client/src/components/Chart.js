@@ -1,14 +1,14 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
-export default function ChartRC({ label, labels, data }) {
+export default function Chart({ /*label,*/ labels, data, backgroundColor, borderColor }) {
 
   const chartData = {
     labels,
     datasets: [{
-      label,
-      backgroundColor: 'rgb(46, 134, 193)',
-      borderColor: 'rgb(21, 67, 96)',
+      // label,
+      backgroundColor,
+      borderColor,
       data,
     }],
   };
@@ -22,8 +22,10 @@ export default function ChartRC({ label, labels, data }) {
         bottom: 20,
       },
     },
+    legend: {
+      display: false,
+    },
   };
-
 
   return (
     <div>
