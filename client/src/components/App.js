@@ -9,8 +9,12 @@ export default class App extends Component {
       data: '',
       labels: '',
       voteName: 'Pizza Toppings',
+      quantity: 10,
+      choiceArr: ['onions', 'peppers', 'mushrooms', 'olives', 'pepperoni', 'pineapple', 'sausage'],
+      maxChoice: 5,
     };
     this.getVote = this.getVote.bind(this);
+    this.seedVote = this.seedVote.bind(this);
   }
 
   componentDidMount() {
@@ -25,9 +29,6 @@ export default class App extends Component {
     return votes;
   }
 
-  test() {
-    console.log('Yah, you clicked a button!');
-  }
 
   fptpAlg(data) {
     const fptpObj = {};
@@ -58,7 +59,24 @@ export default class App extends Component {
   }
 
   seedVote() {
-    
+    axios.get('/seedVote', {
+      params: {
+        voteName: this.state.voteName,
+        quantity: this.state.quantity,
+        choiceArr: this.state.choiceArr,
+        maxChoice: this.state.maxChoice,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        this.getVote();
+      })
+      //console.log(response.data.data);
+      // this.setState({
+      //   labels: response.data.data[0].voteOptions,
+      //   data: this.parseVotes(response.data.data),
+      // }, () => { console.log(this.state.data); })
+      .catch((error) => { console.log(error); });
   }
 
   render() {
@@ -68,7 +86,7 @@ export default class App extends Component {
         <div className="grid-container">
           <div className="grid-userInput">
             <h3>User Input</h3>
-            <button type="button" onClick={this.test}>Db Seeder</button>
+            <button type="button" onClick={this.seedVote}>Db Seeder</button>
           </div>
           <div className="grid-mainChart">
             <h3>Main Chart</h3>

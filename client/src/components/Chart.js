@@ -25,6 +25,14 @@ export default function Chart({ /*label,*/ labels, data, backgroundColor, border
     legend: {
       display: false,
     },
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+          min: 0,
+        },
+      }],
+    },
     responsive: true,
     maintainAspectRatio: false,
   };

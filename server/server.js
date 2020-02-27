@@ -23,12 +23,21 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.get('/getVote', (req, res) => {
   console.log('Server getting from Mongo db');
-  seeder.mongoSeeder('votes', false);
   Data.find({ voteName: req.query.voteName }, (err, data) => {
     console.log(data);
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
+});
+
+app.get('/seedVote', (req, res) => {
+  console.log('Server getting from Mongo db');
+  seeder.mongoSeeder('votes', false, req.query.voteName, req.query.quantity, req.query.choiceArr, req.query.maxChoice, () => { res.send('Yup'); });
+  // Data.find({ voteName: req.query.voteName }, (err, data) => {
+  //   console.log(data);
+  //   if (err) return res.json({ success: false, error: err });
+  //   return res.json({ success: true, data: data });
+  // });
 });
 
 app.listen(port, () => {

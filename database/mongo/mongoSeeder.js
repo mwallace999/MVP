@@ -1,29 +1,15 @@
 /* mongoSeeder.js */
 // Run by typing command: node database/mongo/mongoSeeder.js from project folder
-
 const { MongoClient } = require('mongodb');
 
-// Connection URL
+// Database & Connection Parameters
 const url = 'mongodb://localhost:27017';
-
-// Database & Collection Names & Parameters
 const dbName = 'voteData'; //*** Change to Database name
-const collectionName = 'votes'; //*** Change to Collection name
-const quantity = 100; //*** Total number of data instances to add to db
-const dataBlockSize = 10; //*** Size of each Array that is pushed to db
-
-const pizzaArr = ['onions', 'peppers', 'mushrooms', 'olives', 'pepperoni', 'pineapple', 'sausage'];
-
-const choiceArr = pizzaArr;
-let counter = 1;
-const maxChoice = 4;
-const voteName = 'Pizza Toppings';
-
 
 // Create data instances
-const seed = (collect, client) => {
+const seed = (collect, client, voteName, quantity, choiceArr, maxChoice, callback) => {
   let votes = [];
-  for (let i = counter; i < counter + dataBlockSize; i++) {
+  for (let i = 0; i < quantity; i++) {
     const oneVote = [];
     const choiceQuantity = Math.ceil(Math.random() * maxChoice);
     while (oneVote.length < choiceQuantity) {
@@ -32,7 +18,7 @@ const seed = (collect, client) => {
     }
     const newVote = {
       voteName,
-      voteOptions: pizzaArr,
+      voteOptions: choiceArr,
       vote: oneVote,
     };
     votes.push(newVote);
@@ -40,21 +26,16 @@ const seed = (collect, client) => {
 
   client.db(dbName).collection(collect).insertMany(votes)
     .then(votes = [])
-    .then(console.log(`Partial seed completed ${Math.ceil(counter / dataBlockSize)} of ${Math.floor(quantity / dataBlockSize)}`))
     .then(() => {
-      if (counter + dataBlockSize <= quantity) {
-        counter += dataBlockSize;
-        seed(collect, client);
-      } else {
-        console.log('Database seeded!');
-        client.close();
-      }
+      console.log('Database seeded!');
+      client.close();
+      callback();
     })
     .catch(console.log);
 };
 
 // Delete database and/or run seed
-const mongoSeeder = (collection, overwrite) => {
+const mongoSeeder = (collection, overwrite, voteName, quantity, choiceArr, maxChoice, callback) => {
   MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
     if (err) {
       console.log(err);
@@ -64,14 +45,12 @@ const mongoSeeder = (collection, overwrite) => {
       client.db(dbName).collection(collection).drop((error, del) => {
         if (error) throw error;
         if (del) console.log('Collection deleted');
-        seed(collection, client);
+        seed(collection, client, voteName, quantity, choiceArr, maxChoice, callback);
       });
     } else {
-      seed(collection, client);
+      seed(collection, client, voteName, quantity, choiceArr, maxChoice, callback);
     }
   });
 };
-
-//mongoSeeder(collectionName, false);
 
 exports.mongoSeeder = mongoSeeder;
