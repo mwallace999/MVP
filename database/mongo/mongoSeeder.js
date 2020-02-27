@@ -8,7 +8,7 @@ const url = 'mongodb://localhost:27017';
 
 // Database & Collection Names & Parameters
 const dbName = 'voteData'; //*** Change to Database name
-const collectionName = 'pizzaToppings'; //*** Change to Collection name
+const collectionName = 'votes'; //*** Change to Collection name
 const quantity = 100; //*** Total number of data instances to add to db
 const dataBlockSize = 10; //*** Size of each Array that is pushed to db
 
@@ -72,4 +72,4 @@ const mongoSeeder = (collection, overwrite) => {
   });
 };
 
-mongoSeeder(collectionName, true);
+mongoSeeder(collectionName, false);

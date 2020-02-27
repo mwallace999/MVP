@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-//const axios = require('axios');
 const mongoose = require('mongoose');
+//const axios = require('axios');
 
 const port = 9001;
 const app = express();
@@ -22,24 +22,12 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.get('/getVote', (req, res) => {
   console.log('Server getting from Mongo db');
-  Data.find({}, (err, data) => {
+  Data.find({ voteName: req.query.voteName }, (err, data) => {
     console.log(data);
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
 });
-
-// app.get('/getProducts/:productId', (req, res) => {
-//   const productId = req.params.productId;
-//   db.getProducts(productId, (err, results) => {
-//     if (err) {
-//       console.log(err);
-//       res.end();
-//     } else {
-//       res.send(results);
-//     }
-//   });
-// });
 
 app.listen(port, () => {
   console.log(`Port ${port} is alive!!!`);

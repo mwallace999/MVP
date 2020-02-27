@@ -6,36 +6,37 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      data: [10, 5, 2, 20, 30, 45, 50, 30],
-      labels: ['Choice1', 'Choice2', 'Choice3', 'Choice4', 'Choice5', 'Choice6', 'Choice7', 'Choice8'],
-      vote: 'pizzaToppings',
+      data: '',
+      labels: '',
+      voteName: 'Pizza Toppings',
     };
     this.getVote = this.getVote.bind(this);
   }
-
-  // const data = {
-  //   labels: ["January", "February", "March", "April", "May", "June", "July"],
-  //   datasets: [{
-  //     label: "My First dataset",
-  //     backgroundColor: 'rgb(255, 99, 132)',
-  //     borderColor: 'rgb(255, 99, 132)',
-  //     data: [0, 10, 5, 2, 20, 30, 45],
-  //   }]
-  // }
 
   componentDidMount() {
     this.getVote();
   }
 
+  parseVotes(array) {
+    let votes = [];
+    for (const i of array) {
+      votes.push(i.vote);
+    }
+    return votes;
+  }
+
   getVote() {
     axios.get('/getVote', {
       params: {
-        vote: this.state.vote,
+        voteName: this.state.voteName,
       },
     })
       .then((response) => {
         console.log(response.data.data);
-        //this.setState({ data: Object.values(response.data) }, () => { console.log(response.data); });
+        this.setState({
+          labels: response.data.data[0].voteOptions,
+          data: this.parseVotes(response.data.data),
+        }, () => { console.log(this.state.data); });
       })
       .catch((error) => { console.log(error); });
   }
@@ -51,25 +52,25 @@ export default class App extends Component {
           <div className="grid-mainChart">
             <h3>Main Chart</h3>
             <Chart
+              label="Whatever"
               data={this.state.data}
               labels={this.state.labels}
-              timeSpan={this.state.timeSpan}
             />
           </div>
           <div className="grid-chartSelect1">
-            <h3>Method1</h3>
+            <h3>First Past the Post</h3>
             <Chart
+              label="First Past the Post"
               data={this.state.data}
               labels={this.state.labels}
-              timeSpan={this.state.timeSpan}
             />
           </div>
           <div className="grid-chartSelect2">
-            <h3>Method2</h3>
+            <h3>Single Transferable</h3>
             <Chart
+              label="Single Transferable"
               data={this.state.data}
               labels={this.state.labels}
-              timeSpan={this.state.timeSpan}
             />
           </div>
         </div>

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
-export default function Chart({ labels, data }) {
+export default function Chart({ label, labels, data }) {
 
   const chartData = {
     labels,
     datasets: [{
-      label: 'My First dataset',
+      label,
       backgroundColor: 'rgb(46, 134, 193)',
       borderColor: 'rgb(21, 67, 96)',
       data,

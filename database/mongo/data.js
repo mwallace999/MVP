@@ -1,15 +1,14 @@
 const mongoose = require('mongoose');
-
 const { Schema } = mongoose;
 
-// this will be our data base's data structure
+// PizzaToppings data structure
 const DataSchema = new Schema(
   {
     voteName: String,
     voteOptions: [String],
     vote: [Number],
   },
-  { collection: 'pizzaToppings' },
+  { collection: 'votes' },
 );
 
 // export the new Schema so we could modify it using Node.js
