@@ -4,7 +4,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const seeder = require('./../database/mongo/mongoSeeder');
 
-
 const port = 9001;
 const app = express();
 
@@ -33,11 +32,6 @@ app.get('/getVote', (req, res) => {
 app.get('/seedVote', (req, res) => {
   console.log('Server getting from Mongo db');
   seeder.mongoSeeder('votes', false, req.query.voteName, req.query.quantity, req.query.choiceArr, req.query.maxChoice, () => { res.send('Yup'); });
-  // Data.find({ voteName: req.query.voteName }, (err, data) => {
-  //   console.log(data);
-  //   if (err) return res.json({ success: false, error: err });
-  //   return res.json({ success: true, data: data });
-  // });
 });
 
 app.listen(port, () => {

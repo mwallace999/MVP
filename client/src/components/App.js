@@ -6,12 +6,14 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
+      //for charts
       data: '',
       labels: '',
+      //for seeding
       voteName: 'Pizza Toppings',
-      quantity: 10,
       choiceArr: ['onions', 'peppers', 'mushrooms', 'olives', 'pepperoni', 'pineapple', 'sausage'],
       maxChoice: 5,
+      quantity: 10,
     };
     this.getVote = this.getVote.bind(this);
     this.seedVote = this.seedVote.bind(this);
@@ -62,9 +64,9 @@ export default class App extends Component {
     axios.get('/seedVote', {
       params: {
         voteName: this.state.voteName,
-        quantity: this.state.quantity,
         choiceArr: this.state.choiceArr,
         maxChoice: this.state.maxChoice,
+        quantity: this.state.quantity,
       },
     })
       .then((response) => {
@@ -82,11 +84,73 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <h1>Title</h1>
+        <h1>VoteSmart</h1>
         <div className="grid-container">
           <div className="grid-userInput">
-            <h3>User Input</h3>
-            <button type="button" onClick={this.seedVote}>Db Seeder</button>
+            <h3>Vote</h3>
+            <div>
+              <label>Elections</label>
+              <select>
+                {this.state.choiceArr.map((choice, index) => <option value={index} key={index}>{choice}</option>)}
+              </select><br />
+            </div>
+            <form>
+              <div>
+                <label className="title">Title</label>
+                <input type="text" name="title" required /><br />
+                <table className="newVoteTable">
+                <tbody>
+                  <tr>
+                    <th>Choice</th>
+                    <th>Vote</th>
+                  </tr>
+                  <tr>
+                    <td><input className="input" type="text" name="choice1" required /></td>
+                    <td><input type="number" /></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="choice2" required /></td>
+                    <td><input type="number" /></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="choice3" /></td>
+                    <td><input type="number" /></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="choice4" /></td>
+                    <td><input type="number" /></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="choice5" /></td>
+                    <td><input type="number" /></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="choice6" /></td>
+                    <td><input type="number" /></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="choice7" /></td>
+                    <td><input type="number" /></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="choice8" /></td>
+                    <td><input type="number" /></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><button type="submit">Vote</button></td>
+                  </tr>
+                </tbody>
+                </table>
+              </div>
+            </form>
+            <h3>Create a new Vote</h3>
+            <button type="button">Create</button>
+            <button type="button">Submit</button><br />
+            <h3>Seed</h3>
+            <button type="button" onClick={this.seedVote}>Seed</button>
+            <input type="number" /><br />
+
           </div>
           <div className="grid-mainChart">
             <h3>Main Chart</h3>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
-export default function Chart({ /*label,*/ labels, data, backgroundColor, borderColor }) {
+export default function Chart({ labels, data, backgroundColor, borderColor }) {
 
   const chartData = {
     labels,
