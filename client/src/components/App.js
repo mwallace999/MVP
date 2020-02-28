@@ -6,20 +6,25 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      //for charts
+      // for charts
       data: '',
       labels: '',
-      //for seeding
+      // for seeding
       voteName: 'Pizza Toppings',
       choiceArr: ['onions', 'peppers', 'mushrooms', 'olives', 'pepperoni', 'pineapple', 'sausage'],
       maxChoice: 5,
       quantity: 10,
+      // for user interface
+      dropDown: [],
     };
     this.getVote = this.getVote.bind(this);
     this.seedVote = this.seedVote.bind(this);
+    this.getCategories = this.getCategories.bind(this);
+    this.dropDownChange = this.dropDownChange.bind(this);
   }
 
   componentDidMount() {
+    this.getCategories();
     this.getVote();
   }
 
@@ -41,7 +46,27 @@ export default class App extends Component {
       fptpObj[data[j][0]] += 1;
     }
     return Object.values(fptpObj);
-  };
+  }
+
+  getCategories() {
+    axios.get('/getCategories')
+      .then((response) => {
+        console.log(response.data.data.unshift(''));
+        this.setState({
+          dropDown: response.data.data,
+        }, () => { console.log(this.state.dropDown); });
+      })
+      .catch((error) => { console.log(error); });
+  }
+
+  dropDownChange(thing) {
+    // console.log(document.getElementById('dropDown'));
+    // if (document.getElementById('dropDown') != null && document.getElementById('dropDown').value !== '') {
+    //   this.setState({
+    //     voteName: document.getElementById('dropDown').value,
+    //   }, () => { if (this.state.voteName !== []) this.getVote(); });
+    // }
+  }
 
 
   getVote() {
@@ -84,20 +109,29 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <h1>VoteSmart</h1>
+        <h1 className="titleTop">VoteSm@rt</h1>
         <div className="grid-container">
           <div className="grid-userInput">
-            <h3>Vote</h3>
-            <div>
-              <label>Elections</label>
-              <select>
-                {this.state.choiceArr.map((choice, index) => <option value={index} key={index}>{choice}</option>)}
-              </select><br />
+            <div className="dropDownName">
+              <table>
+                <tbody>
+                  <tr>
+                    <td><h3>Vote</h3></td>
+                    <td>
+                      <select id="dropDown" onChange={this.dropDownChange()} style={{width: '200px'}}>
+                      {this.state.dropDown.map((choice, index) => <option value={choice} key={index}>{choice}</option>)}
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><h3 className="title">Title</h3></td>
+                    <td><input type="text" style={{width: '200px'}} name="title" /></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <form>
               <div>
-                <label className="title">Title</label>
-                <input type="text" name="title" required /><br />
                 <table className="newVoteTable">
                 <tbody>
                   <tr>
@@ -158,7 +192,7 @@ export default class App extends Component {
               // label="First Past the Post"
               data={this.fptpAlg(this.state.data)}
               labels={this.state.labels}
-              backgroundColor="rgb(46, 134, 193)"
+              backgroundColor="rgb(102, 0, 0)"
               borderColor="rgb(21, 67, 96)"
             />
           </div>
@@ -168,7 +202,7 @@ export default class App extends Component {
               // label="First Past the Post"
               data={this.fptpAlg(this.state.data)}
               labels={this.state.labels}
-              backgroundColor="rgb(46, 134, 193)"
+              backgroundColor="rgb(102, 0, 0)"
               borderColor="rgb(21, 67, 96)"
             />
           </div>

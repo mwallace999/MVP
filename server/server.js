@@ -21,19 +21,28 @@ db.once('open', () => console.log('Connected to Mongo db'));
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.get('/getVote', (req, res) => {
-  console.log('Server getting from Mongo db');
+  console.log('Server getting vote results from Mongo db');
   Data.find({ voteName: req.query.voteName }, (err, data) => {
-    console.log(data);
+    console.log('This is' + data);
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
 });
 
 app.get('/seedVote', (req, res) => {
-  console.log('Server getting from Mongo db');
+  console.log('Server seeding Mongo db');
   seeder.mongoSeeder('votes', false, req.query.voteName, req.query.quantity, req.query.choiceArr, req.query.maxChoice, () => { res.send('Yup'); });
 });
 
 app.listen(port, () => {
   console.log(`Port ${port} is alive!!!`);
+});
+
+app.get('/getCategories', (req, res) => {
+  console.log('Server getting categories from Mongo db');
+  Data.distinct('voteName', (err, data) => {
+    console.log(data);
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
 });

@@ -33,13 +33,13 @@ export default function Chart({ labels, data, backgroundColor, borderColor }) {
         },
       }],
     },
-    responsive: true,
+    // responsive: true,
     maintainAspectRatio: false,
   };
 
   return (
     <div>
-      <Bar data={chartData} options={options} /*width="50%" height="100%"*/ />
+      <Bar data={chartData} options={options} width="20%" height="180%" />
     </div>
   );
 }
